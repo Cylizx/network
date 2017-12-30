@@ -2,10 +2,10 @@
 
 from socketserver import ThreadingTCPServer, BaseRequestHandler
 
-from handle_message import handle_message
-from messages import *
-from utils import receive, get_local_ip
-from wrapper import decode_from_bytes, object_to_message
+from network.handle_message import handle_message
+from network.messages import *
+from network.utils import receive, get_local_ip
+from network.wrapper import decode_from_bytes, object_to_message
 
 
 class Server:

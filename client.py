@@ -2,10 +2,10 @@
 
 import socket
 
-from messages import *
-from peers import Peer
-from utils import receive
-from wrapper import decode_from_bytes, object_to_message
+from network.messages import *
+from network.peers import Peer
+from network.utils import receive
+from network.wrapper import decode_from_bytes, object_to_message
 
 
 class Sender:

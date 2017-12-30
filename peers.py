@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from client import Sender
-from messages import GetPeersMessage
-from utils import get_local_ip
+from network.client import Sender
+from network.messages import GetPeersMessage
+from network.utils import get_local_ip
 
 initial_peers = {
     '127.0.0.1:10086',

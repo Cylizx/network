@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from peers import init_peers
-from server import Server
+from network.peers import init_peers
+from network.server import Server
 
 
 def init():
