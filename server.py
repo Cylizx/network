@@ -4,6 +4,7 @@ from socketserver import ThreadingTCPServer, BaseRequestHandler
 
 from handle_message import handle_message
 from messages import *
+from peers import get_known_peers
 from utils import receive, get_local_ip
 from wrapper import decode_from_bytes, object_to_message
 
@@ -25,8 +26,7 @@ class UniformRequestHandler(BaseRequestHandler):
                 print(obj.timestamp)
                 self.request.send(object_to_message(HeartbeatMessage()))
             elif isinstance(obj, GetPeersMessage):
-                # TODO
-                pass
+                self.request.send(object_to_message(PeersMessage(get_known_peers())))
             elif isinstance(obj, PeersMessage):
                 # TODO
                 pass

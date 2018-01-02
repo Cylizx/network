@@ -18,11 +18,9 @@ broadcast
 
 handle transaction messages(in handle_message.py for Jas0n1ee)
 
+find peers
+
 
 ## TODO
 get public ip
-
-handle some messages
-
-find peers
 
