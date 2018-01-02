@@ -5,9 +5,9 @@ from peers import init_peers, get_known_peers
 from server import Server
 
 
-def init():
+def init(port=10086):
     init_peers()
-    server = Server()
+    server = Server(port=port)
     server.start_server()
 
 
