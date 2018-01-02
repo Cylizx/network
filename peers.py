@@ -2,11 +2,9 @@
 
 import sys
 
+import client
 import messages
 from utils import get_local_ip
-
-if 'client' not in sys.modules:
-    import client
 
 if 'network' not in sys.modules:
     import network
@@ -58,7 +56,7 @@ def init_peers(port):
 
 def find_peer():
     global known_peers
-    for peer in known_peers:
+    for peer in list(known_peers):
         if peer == get_local_peer():
             continue
         sender = client.Sender(peer)
