@@ -2,12 +2,14 @@
 
 import sys
 
-import client
 import messages
 from utils import get_local_ip
 
 if 'network' not in sys.modules:
     import network
+
+if 'client' not in sys.modules:
+    import client
 
 
 class Peer:
@@ -51,7 +53,7 @@ def init_peers(port):
     local_peer = Peer(get_local_ip(), port)
     add_peer_to_known_peers(local_peer)
     find_peer()
-    network.broadcast(messages.PeersMessage(get_known_peers()))
+    network.broadcast_message(messages.PeersMessage(get_known_peers()))
 
 
 def find_peer():
