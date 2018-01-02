@@ -14,12 +14,15 @@ peers discover
 
 some utils
 
+broadcast
+
+handle transaction messages(in handle_message.py for Jas0n1ee)
+
 
 ## TODO
 get public ip
 
-tx broadcast
-
 handle some messages
 
-handle transaction messages(in handle_message.py for Jas0n1ee)
+find peers
+
