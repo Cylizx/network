@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 
-from client import Sender
+import sys
+
 from messages import GetPeersMessage
 from utils import get_local_ip
+
+if 'client' not in sys.modules:
+    import client
 
 
 class Peer:
@@ -29,7 +33,7 @@ def init_peers(port):
 def find_peer():
     global known_peers
     for peer in get_known_peers():
-        sender = Sender(peer)
+        sender = client.Sender(peer)
         peers_message = sender.send(GetPeersMessage())
         for new_peer in peers_message.peers:
             known_peers.add(new_peer)
