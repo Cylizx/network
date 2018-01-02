@@ -24,8 +24,8 @@ def message_wrap(serialization):
     return bytes('%010d' % content_length, 'utf-8') + content
 
 
-def object_to_message(obj):
-    return message_wrap(pickle.dumps(obj))
+def wrap_message(msg):
+    return message_wrap(pickle.dumps(msg))
 
 
 def decode_from_bytes(serialization):
@@ -44,4 +44,4 @@ if __name__ == '__main__':
 
 
     test = TestClass(123, 'abc', [3, 2, 1])
-    print(object_to_message('hello'))
+    print(wrap_message('hello'))

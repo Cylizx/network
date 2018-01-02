@@ -11,11 +11,11 @@ def init(port=10086):
     server.start_server()
 
 
-def broadcast(obj):
+def broadcast(msg):
     for peer in peers.get_known_peers():
         if peer != peers.get_local_peer():
             sender = client.Sender(peer)
-            sender.send(obj)
+            sender.send_message(msg)
 
 
 if __name__ == '__main__':

@@ -3,7 +3,6 @@
 import sys
 
 import messages
-import wrapper
 from utils import get_local_ip
 
 if 'client' not in sys.modules:
@@ -54,7 +53,7 @@ def init_peers(port):
     local_peer = Peer(get_local_ip(), port)
     add_peer_to_known_peers(local_peer)
     find_peer()
-    network.broadcast(wrapper.object_to_message(messages.PeersMessage(get_known_peers())))
+    network.broadcast(messages.PeersMessage(get_known_peers()))
 
 
 def find_peer():
@@ -63,7 +62,7 @@ def find_peer():
         if peer == get_local_peer():
             continue
         sender = client.Sender(peer)
-        peers_message = sender.send(messages.GetPeersMessage())
+        peers_message = sender.send_message(messages.GetPeersMessage())
         for new_peer in peers_message.peers:
             add_peer_to_known_peers(new_peer)
 

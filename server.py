@@ -6,7 +6,7 @@ import peers
 from handle_message import handle_message
 from messages import *
 from utils import receive, get_local_ip
-from wrapper import decode_from_bytes, object_to_message
+from wrapper import decode_from_bytes
 
 
 class Server:
@@ -25,9 +25,9 @@ class UniformRequestHandler(BaseRequestHandler):
             print('new request')
             if isinstance(obj, HeartbeatMessage):
                 print(obj.timestamp)
-                self.request.send(object_to_message(HeartbeatMessage()))
+                self.request.send_message(HeartbeatMessage())
             elif isinstance(obj, GetPeersMessage):
-                self.request.send(object_to_message(PeersMessage(peers.get_known_peers())))
+                self.request.send_message(PeersMessage(peers.get_known_peers()))
             elif isinstance(obj, PeersMessage):
                 print('request is PeersMessage')
                 for peer in obj.peers:
