@@ -4,10 +4,6 @@ from client import Sender
 from messages import GetPeersMessage
 from utils import get_local_ip
 
-initial_peers = {
-    '127.0.0.1:10086',
-}
-
 known_peers = set()
 
 
@@ -15,6 +11,11 @@ class Peer:
     def __init__(self, ip, port):
         self.ip = ip
         self.port = port
+
+
+initial_peers = {
+    Peer('127.0.0.1', 10086),
+}
 
 
 def get_known_peers():
