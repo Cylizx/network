@@ -6,6 +6,7 @@ from network.handle_message import handle_message
 from network.messages import *
 from network.utils import receive, get_local_ip
 from network.wrapper import decode_from_bytes, object_to_message
+from network.peers import get_known_peers
 
 
 class Server:
@@ -25,8 +26,7 @@ class UniformRequestHandler(BaseRequestHandler):
                 print(obj.timestamp)
                 self.request.send(object_to_message(HeartbeatMessage()))
             elif isinstance(obj, GetPeersMessage):
-                # TODO
-                pass
+                self.request.send(object_to_message(PeersMessage(get_known_peers())))
             elif isinstance(obj, PeersMessage):
                 # TODO
                 pass
