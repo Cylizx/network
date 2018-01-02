@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
 import socket
+import sys
 
 from network.messages import *
-from network.peers import Peer
 from network.utils import receive
 from network.wrapper import decode_from_bytes, object_to_message
+
+if 'peers' not in sys.modules:
+    import peers
 
 
 class Sender:
@@ -29,5 +32,5 @@ class Sender:
 
 
 if __name__ == '__main__':
-    sender = Sender(Peer('127.0.0.1', 10086))
+    sender = Sender(peers.Peer('127.0.0.1', 10086))
     print(sender.send(HeartbeatMessage()).timestamp)

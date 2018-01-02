@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 
-from network.client import Sender
-from network.peers import init_peers, get_known_peers
+import network.client
+import network.peers
 from network.server import Server
 
 
 def init(port=10086):
-    init_peers(port)
+    peers.init_peers(port)
     server = Server(port=port)
     server.start_server()
 
 
 def broadcast(obj):
-    for peer in get_known_peers():
-        sender = Sender(peer)
-        sender.send(obj)
+    for peer in peers.get_known_peers():
+        if peer != peers.get_local_peer():
+            sender = client.Sender(peer)
+            sender.send(obj)
+
+
+if __name__ == '__main__':
+    init(10087)
