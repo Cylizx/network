@@ -6,7 +6,7 @@ from server import Server
 
 
 def init(port=10086):
-    init_peers()
+    init_peers(port)
     server = Server(port=port)
     server.start_server()
 
