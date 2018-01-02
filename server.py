@@ -33,7 +33,8 @@ class UniformRequestHandler(BaseRequestHandler):
                 for peer in msg.peers:
                     peers.add_peer_to_known_peers(peer)
             else:
-                self.request.send(wrap_message(handle_message(msg)))
+                handle_message(msg)
+                # self.request.send(wrap_message(handle_message(msg)))
 
 
 class TestClass:
