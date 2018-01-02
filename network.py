@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 
-import sys
-
+import client
+import peers
 from server import Server
-
-if 'client' not in sys.modules:
-    import client
-
-if 'peers' not in sys.modules:
-    import peers
 
 
 def init(port=10086):
@@ -19,9 +13,10 @@ def init(port=10086):
 
 def broadcast(obj):
     for peer in peers.get_known_peers():
-        sender = client.Sender(peer)
-        sender.send(obj)
+        if peer != peers.get_local_peer():
+            sender = client.Sender(peer)
+            sender.send(obj)
 
 
 if __name__ == '__main__':
-    init(10086)
+    init(10087)

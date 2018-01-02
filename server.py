@@ -2,9 +2,9 @@
 
 from socketserver import ThreadingTCPServer, BaseRequestHandler
 
+import peers
 from handle_message import handle_message
 from messages import *
-from peers import get_known_peers, known_peers
 from utils import receive, get_local_ip
 from wrapper import decode_from_bytes, object_to_message
 
@@ -22,14 +22,16 @@ class UniformRequestHandler(BaseRequestHandler):
         while True:
             content_length = int(receive(self.request, 10))
             obj = decode_from_bytes(receive(self.request, content_length))
+            print('new request')
             if isinstance(obj, HeartbeatMessage):
                 print(obj.timestamp)
                 self.request.send(object_to_message(HeartbeatMessage()))
             elif isinstance(obj, GetPeersMessage):
-                self.request.send(object_to_message(PeersMessage(get_known_peers())))
+                self.request.send(object_to_message(PeersMessage(peers.get_known_peers())))
             elif isinstance(obj, PeersMessage):
+                print('request is PeersMessage')
                 for peer in obj.peers:
-                    known_peers.add(peer)
+                    peers.add_peer_to_known_peers(peer)
             else:
                 handle_message(obj)
 
