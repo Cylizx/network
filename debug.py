@@ -5,9 +5,9 @@ info = 1
 running = 2
 error = 3
 
-debug_mode = running
+debug_level = running
 
 
-def output(scope, content):
-    if scope >= debug_mode:
+def output(level, content):
+    if level >= debug_level:
         print(content)
