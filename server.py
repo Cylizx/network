@@ -22,7 +22,7 @@ class UniformRequestHandler(BaseRequestHandler):
         while True:
             content_length = int(receive(self.request, 10))
             msg = decode_from_bytes(receive(self.request, content_length))
-            print('new request')
+            # print('new request')
             if isinstance(msg, HeartbeatMessage):
                 print(msg.timestamp)
                 self.request.send(wrap_message(HeartbeatMessage()))

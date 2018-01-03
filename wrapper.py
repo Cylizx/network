@@ -11,7 +11,7 @@ class MessageTypeNotSupported:
     pass
 
 
-def message_wrap(serialization):
+def add_header(serialization):
     if type(serialization) == str:
         content = bytes(serialization, 'utf-8')
     elif type(serialization) == bytes:
@@ -25,7 +25,7 @@ def message_wrap(serialization):
 
 
 def wrap_message(msg):
-    return message_wrap(pickle.dumps(msg))
+    return add_header(pickle.dumps(msg))
 
 
 def decode_from_bytes(serialization):
