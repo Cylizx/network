@@ -5,12 +5,12 @@ from socketserver import ThreadingTCPServer, BaseRequestHandler
 import peers
 from handle_message import handle_message
 from messages import *
-from utils import receive, get_local_ip
+from utils import receive
 from wrapper import decode_from_bytes, wrap_message
 
 
 class Server:
-    def __init__(self, ip=get_local_ip(), port=10086):
+    def __init__(self, ip, port):
         self.server = ThreadingTCPServer((ip, port), UniformRequestHandler)
 
     def start_server(self):

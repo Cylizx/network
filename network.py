@@ -1,13 +1,23 @@
 #!/usr/bin/env python3
 
+from concurrent.futures import ThreadPoolExecutor
+
 import client
 import peers
 from server import Server
 
 
-def init(port=10086):
+def init(port=10086, sync=True):
     peers.init_peers(port)
-    server = Server(port=port)
+    if sync:
+        start_server_sync()
+    else:
+        pool = ThreadPoolExecutor(1)
+        pool.submit(start_server_sync)
+
+
+def start_server_sync():
+    server = Server(peers.get_local_peer().ip, peers.get_local_peer().port)
     server.start_server()
 
 
