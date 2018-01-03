@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import client
+import debug
 import messages
 import network
 from utils import get_local_ip
@@ -33,9 +34,10 @@ def get_local_peer():
     return local_peer
 
 
-def add_peer_to_known_peers(peer):
-    print('add new peer: ' + str(peer))
-    known_peers.add(peer)
+def add_peer(peer):
+    if peer not in known_peers:
+        debug.output(debug.info, '[add_peer] new peer: ' + str(peer))
+        known_peers.add(peer)
 
 
 def get_known_peers():
@@ -45,28 +47,28 @@ def get_known_peers():
 def init_peers(port):
     global local_peer
     local_peer = Peer(get_local_ip(), port)
-    add_peer_to_known_peers(local_peer)
-    print('start to look for peers')
-    find_peer()
-    print('look for peers ended')
-    print('broadcast known peers')
+    add_peer(local_peer)
+    debug.output(debug.info, '[init_peers] start to look for peers')
+    find_peers()
+    debug.output(debug.info, '[init_peers] look for peers ended')
+    debug.output(debug.info, '[init_peers] broadcast known peers')
     network.broadcast_message(messages.PeersMessage(get_known_peers()))
-    print('broadcasted known peers')
+    debug.output(debug.info, '[init_peers] broadcasted known peers')
 
 
-def find_peer():
+def find_peers():
     global known_peers
     for peer in list(known_peers):
         if peer == get_local_peer():
             continue
-        print('send GetPeersMessage to ' + str(peer))
+        debug.output(debug.info, '[find_peers] send GetPeersMessage to ' + str(peer))
         sender = client.Sender(peer)
         peers_message = sender.send_message(messages.GetPeersMessage())
-        print('sent GetPeersMessage to ' + str(peer))
+        debug.output(debug.info, '[find_peers] sent GetPeersMessage to ' + str(peer))
         for new_peer in peers_message.peers:
-            add_peer_to_known_peers(new_peer)
+            add_peer(new_peer)
         del sender
-        print('close connection to ' + str(peer))
+        debug.output(debug.info, '[find_peers] close connection to ' + str(peer))
 
 
 if __name__ == '__main__':

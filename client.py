@@ -2,6 +2,7 @@
 
 import socket
 
+import debug
 import peers
 from messages import *
 from utils import receive
@@ -16,12 +17,12 @@ class Sender:
 
     def send_message(self, msg):
         if not self.connected:
-            print('sender: try connect to %s' % str(self.peer))
+            debug.output(debug.verbose, '[sender] try connect to %s' % str(self.peer))
             self.s.connect((self.peer.ip, self.peer.port))
             self.connected = True
-            print('sender: connected to %s' % str(self.peer))
+            debug.output(debug.verbose, '[sender] connected to %s' % str(self.peer))
 
-        print('sender: send %s to %s' % (str(msg), str(self.peer)))
+        debug.output(debug.verbose, '[sender] send %s to %s' % (str(msg), str(self.peer)))
         content = wrap_message(msg)
         self.s.send(content)
         content_length = int(receive(self.s, 10))

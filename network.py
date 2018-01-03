@@ -3,6 +3,7 @@
 from concurrent.futures import ThreadPoolExecutor
 
 import client
+import debug
 import peers
 from server import Server
 
@@ -24,13 +25,13 @@ def start_server_sync():
 def broadcast_message(msg):
     for peer in list(peers.get_known_peers()):
         if peer != peers.get_local_peer():
-            print('broadcast: send %s to ' % str(type(msg)) + str(peer))
+            debug.output(debug.info, '[broadcast] send %s to ' % str(type(msg)) + str(peer))
             sender = client.Sender(peer)
             sender.send_message(msg)
-            print('broadcast: sent %s to ' % str(type(msg)) + str(peer))
+            debug.output(debug.info, '[broadcast] sent %s to ' % str(type(msg)) + str(peer))
             del sender
-            print('close connection to ' + str(peer))
+            debug.output(debug.info, '[broadcast] close connection to ' + str(peer))
 
 
 if __name__ == '__main__':
-    init(10090)
+    init(10089)
