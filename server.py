@@ -19,22 +19,26 @@ class Server:
 
 class UniformRequestHandler(BaseRequestHandler):
     def handle(self):
-        while True:
-            content_length = int(receive(self.request, 10))
-            msg = decode_from_bytes(receive(self.request, content_length))
-            # print('new request')
-            if isinstance(msg, HeartbeatMessage):
-                print(msg.timestamp)
-                self.request.send(wrap_message(HeartbeatMessage()))
-            elif isinstance(msg, GetPeersMessage):
-                self.request.send(wrap_message(PeersMessage(peers.get_known_peers())))
-            elif isinstance(msg, PeersMessage):
-                print('request is PeersMessage')
-                for peer in msg.peers:
-                    peers.add_peer_to_known_peers(peer)
-            else:
-                handle_message(msg)
-                # self.request.send(wrap_message(handle_message(msg)))
+        print('server: new connection from ' + str(self.client_address))
+        content_length = int(receive(self.request, 10))
+        msg = decode_from_bytes(receive(self.request, content_length))
+        if isinstance(msg, HeartbeatMessage):
+            print(msg.timestamp)
+            self.request.send(wrap_message(HeartbeatMessage()))
+        elif isinstance(msg, GetPeersMessage):
+            print('server: receive %s from ' % str(type(msg)) + str(self.client_address))
+            print('server: send to ' + str(self.client_address))
+            self.request.send(wrap_message(PeersMessage(peers.get_known_peers())))
+            print('server: sent to ' + str(self.client_address))
+        elif isinstance(msg, PeersMessage):
+            print('server: receive %s from ' % str(type(msg)) + str(self.client_address))
+            for peer in msg.peers:
+                peers.add_peer_to_known_peers(peer)
+            self.request.send(wrap_message(HeartbeatMessage()))
+        else:
+            handle_message(msg)
+            self.request.send(wrap_message(HeartbeatMessage()))
+        print('server: exit handle')
 
 
 class TestClass:

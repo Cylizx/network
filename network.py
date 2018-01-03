@@ -12,11 +12,15 @@ def init(port=10086):
 
 
 def broadcast_message(msg):
-    for peer in peers.get_known_peers():
+    for peer in list(peers.get_known_peers()):
         if peer != peers.get_local_peer():
+            print('broadcast: send %s to ' % str(type(msg)) + str(peer))
             sender = client.Sender(peer)
             sender.send_message(msg)
+            print('broadcast: sent %s to ' % str(type(msg)) + str(peer))
+            del sender
+            print('close connection to ' + str(peer))
 
 
 if __name__ == '__main__':
-    init(10088)
+    init(10090)
