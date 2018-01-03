@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 
 import socket
-import sys
 
+import peers
 from messages import *
 from utils import receive
 from wrapper import decode_from_bytes, wrap_message
-
-if 'peers' not in sys.modules:
-    import peers
 
 
 class Sender:

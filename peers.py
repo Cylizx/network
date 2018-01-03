@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
-
 import client
 import messages
+import network
 from utils import get_local_ip
-
-if 'network' not in sys.modules:
-    import network
 
 
 class Peer:
@@ -52,7 +48,7 @@ def init_peers(port):
     add_peer_to_known_peers(local_peer)
     print('start to look for peers')
     find_peer()
-    print('peers found')
+    print('look for peers ended')
     print('broadcast known peers')
     network.broadcast_message(messages.PeersMessage(get_known_peers()))
     print('broadcasted known peers')
