@@ -2,9 +2,10 @@
 
 verbose = 0
 info = 1
-error = 2
+running = 2
+error = 3
 
-debug_mode = info
+debug_mode = running
 
 
 def output(scope, content):

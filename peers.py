@@ -36,7 +36,7 @@ def get_local_peer():
 
 def add_peer(peer):
     if peer not in known_peers:
-        debug.output(debug.info, '[add_peer] new peer: ' + str(peer))
+        debug.output(debug.running, '[add_peer] new peer: ' + str(peer))
         known_peers.add(peer)
 
 
