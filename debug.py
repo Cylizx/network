@@ -5,7 +5,7 @@ info = 1
 running = 2
 error = 3
 
-debug_level = running
+debug_level = info
 
 
 def output(level, content):
